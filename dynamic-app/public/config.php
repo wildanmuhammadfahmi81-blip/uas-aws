@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+date_default_timezone_set('Asia/Jakarta');
+
 define('APP_NAME', getenv('APP_NAME') ?: 'UAS Administrasi Server');
 
 function db(): mysqli
@@ -17,7 +19,13 @@ function db(): mysqli
     $password = getenv('DB_PASSWORD') ?: 'uas_password';
     $database = getenv('DB_NAME') ?: 'uas_db';
 
-    $connection = new mysqli($host, $user, $password, $database, $port);
+    $connection = new mysqli(
+        $host,
+        $user,
+        $password,
+        $database,
+        $port
+    );
 
     if ($connection->connect_error) {
         http_response_code(500);
@@ -25,6 +33,9 @@ function db(): mysqli
     }
 
     $connection->set_charset('utf8mb4');
+
+    // timezone WIB
+    $connection->query("SET time_zone = '+07:00'");
 
     return $connection;
 }
