@@ -58,5 +58,6 @@ jobs:
             MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
             EOF
             docker compose pull dynamic-app
+            docker rm -f uas-dynamic-app uas-reverse-proxy 2>/dev/null || true
             docker compose up -d mariadb dynamic-app reverse-proxy
             docker image prune -f
