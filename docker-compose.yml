@@ -1,0 +1,59 @@
+services:
+  reverse-proxy:
+    image: nginx:alpine
+    container_name: uas-reverse-proxy
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - static-cv
+      - dynamic-app
+
+  static-cv:
+    build:
+      context: ./static-cv
+    image: ${STATIC_IMAGE:-wildanmfahmi123/uas-static:latest}
+    container_name: uas-static-cv
+    restart: unless-stopped
+
+  dynamic-app:
+    build:
+      context: ./dynamic-app
+    image: ${DYNAMIC_IMAGE:-wildanmfahmi123/uas-dynamic:latest}
+    container_name: uas-dynamic-app
+    restart: unless-stopped
+    environment:
+      APP_NAME: ${APP_NAME:-UAS Administrasi Server}
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE:-uas_db}
+      DB_USER: ${MYSQL_USER:-uas_user}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-uas_password}
+    ports:
+      - "${DYNAMIC_PORT:-8080}:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  mariadb:
+    image: mariadb:11.4
+    container_name: uas-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password_uas}
+      MARIADB_DATABASE: ${MYSQL_DATABASE:-uas_db}
+      MARIADB_USER: ${MYSQL_USER:-uas_user}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD:-uas_password}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mariadb_data:
