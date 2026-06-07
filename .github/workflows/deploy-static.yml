@@ -46,9 +46,17 @@ jobs:
             cd "$HOME/uas-aws"
             git fetch origin main
             git reset --hard origin/main
-            if [ ! -f .env ]; then
-              cp .env.example .env
-            fi
+            cat > .env <<EOF
+            APP_NAME=UAS Administrasi Server
+            STATIC_IMAGE=${{ secrets.STATIC_IMAGE }}
+            DYNAMIC_IMAGE=${{ secrets.DYNAMIC_IMAGE }}
+            HTTP_PORT=80
+            DYNAMIC_PORT=8080
+            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+            MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+            MYSQL_USER=${{ secrets.MYSQL_USER }}
+            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+            EOF
             docker compose pull static-cv
             docker compose up -d static-cv reverse-proxy
             docker image prune -f
