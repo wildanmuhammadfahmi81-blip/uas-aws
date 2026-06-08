@@ -25,7 +25,7 @@ services:
     container_name: uas-dynamic-app
     restart: unless-stopped
     environment:
-      APP_NAME: ${APP_NAME:-UAS Administrasi Server}
+      APP_NAME: ${APP_NAME:-UAS Administrasi Server Wildan M Fahmi_2388010030}
       DB_HOST: mariadb
       DB_PORT: 3306
       DB_NAME: ${MYSQL_DATABASE:-uas_db}
