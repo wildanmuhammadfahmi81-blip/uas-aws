@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 date_default_timezone_set('Asia/Jakarta');
 
-define('APP_NAME', getenv('APP_NAME') ?: 'UAS Administrasi Server');
+define('APP_NAME', getenv('APP_NAME') ?: 'UAS Administrasi Server Wildan M Fahmi_2388010030');
 
 function db(): mysqli
 {
