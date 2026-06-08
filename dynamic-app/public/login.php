@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post">
             <label>
                 Username
-                <input name="username" autocomplete="username" required autofocus>
+                <input name="username" autocomplete="username" required autofocus placeholder="username">
             </label>
             <label>
                 Password
