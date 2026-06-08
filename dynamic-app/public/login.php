@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="login-card">
         <p class="eyebrow">UAS Cloud Computing II</p>
         <h1><?= e(APP_NAME) ?></h1>
-        <p class="muted">Masuk untuk mengelola data CRUD sederhana.</p>
+        <p class="muted">Masuk untuk mengelola data CRUD yang sangat sederhana.</p>
 
         <?php if ($error !== ''): ?>
             <div class="alert error"><?= e($error) ?></div>
