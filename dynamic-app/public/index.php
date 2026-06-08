@@ -81,7 +81,7 @@ $notes = db()->query(
     <main class="shell">
         <header class="topbar">
             <div>
-                <p class="eyebrow">UAS Administrasi Server</p>
+                <p class="eyebrow">UAS Administrasi Server Wildan Muhammad Fahmi-2388010030</p>
                 <h1><?= e(APP_NAME) ?></h1>
             </div>
             <div class="account">
