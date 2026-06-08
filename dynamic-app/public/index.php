@@ -113,7 +113,7 @@ $notes = db()->query(
 
                 <label>
                     Deskripsi
-                    <textarea name="description" rows="5" placeholder="Tulis detail data"><?= e($editing['description'] ?? '') ?></textarea>
+                    <textarea name="description" rows="5" placeholder="Tulis detail data yang benar"><?= e($editing['description'] ?? '') ?></textarea>
                 </label>
 
                 <div class="actions">
